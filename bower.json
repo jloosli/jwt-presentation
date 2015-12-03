@@ -1,0 +1,27 @@
+{
+  "name": "jwt-presentation",
+  "authors": [
+    "Jared Loosli <jloosli@gmail.com>"
+  ],
+  "description": "JWT Presentation for OgdenJS",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "jwt",
+    "token",
+    "learning"
+  ],
+  "license": "MIT",
+  "homepage": "http://github.com/jloosli/jwt-presentation",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "impress.js": "~0.5.3"
+  }
+}

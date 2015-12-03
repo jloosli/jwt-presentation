@@ -1,0 +1,13 @@
+{
+    "name": "jwt-example/get_token",
+    "description": "Get yer token",
+    "require": {
+        "firebase/php-jwt": "^3.0"
+    },
+    "authors": [
+        {
+            "name": "Jared Loosli",
+            "email": "jloosli@gmail.com"
+        }
+    ]
+}

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=1024"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <title>JWT | by Jared Loosli @jloosli</title>
+
+    <meta name="description" content="Overview of JWT Authentication and how it can be used in your applications"/>
+    <meta name="author" content="Jared Loosli"/>
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:regular,semibold,italic,italicsemibold|PT+Sans:400,700,400italic,700italic|PT+Serif:400,700,400italic,700italic"
+          rel="stylesheet"/>
+    <link href="css/styles.css" rel="stylesheet"/>
+    <link rel="shortcut icon" href="favicon.png"/>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"/>
+</head>
+<body class="impress-not-supported">
+<div class="fallback-message">
+    <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified
+        version of this presentation.</p>
+    <p>For the best experience please use the latest browser.</p>
+</div>
+<div id="impress">
+    <div id="title" class="step" data-x="-1500" data-y="-1500" data-rotate="90">
+        Authentication via Web Tokens
+        <p class="author">Jared Loosli <br>
+            <a class="twitter" href="https://twitter.com/jloosli">@jloosli</a>
+        </p>
+    </div>
+    <div id="authentication" class="step slide" data-x="0" data-y="-1500">
+        Authentication
+        <section>Asks and answers the question:<br>
+            &ldquo;Who Are You?&rdquo;</section>
+        Authorization
+        <section>Determines what access an entity is given.</section>
+    </div>
+
+    <div id="cookies" class="step slide" data-x="1000" data-y="-1500">
+        What about cookies?
+        <div class="flexbox-columns">
+            <section class="pros">
+                <h2>Pros</h2>
+                <ul>
+                    <li>Browsers deal with them automatically</li>
+                    <li>Most back end frameworks can handle them automatically</li>
+                    <li>Low barrier to entry</li>
+                </ul>
+            </section>
+            <section class="cons">
+                <h2>Cons</h2>
+                <ul>
+                    <li>Outside of a browser?</li>
+                    <li>CSRF Issues</li>
+                    <li>Difficult to Scale Application</li>
+                    <li>Depends on Specific State</li>
+                    <li>Cross Domain Issues</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <div id="definition" class="step" data-x="-2000" data-y="0"  data-rotate="90">
+        <span>J</span>SON <span>W</span>eb <span>T</span>oken
+    </div>
+
+    <div id="why" class="step slide" data-x="0" data-y="0">
+        Pass data to your application
+        with a digital signature
+        statelessly
+    </div>
+
+    <div id="JWT" class="step slide" data-x="1000" data-y="0">
+        JSON WEB Token
+        <section class="token">
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9<span>.</span><br>
+            eyJpc3MiOiJodHRwOi8vbXlzaXRlLmNvbSIsInN1YiI6IjEy<br>
+            MzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJ<br>
+            hZG1pbiI6ZmFsc2V9<span>.</span><br>
+            557STb-WKKi_UD2zN_Hjc9TxxEgaG3dchGupWToVhbs
+        </section>
+    </div>
+
+    <div id="JWT-parts" class="step slide" data-x="-1000" data-y="1000">
+        Three Distinct parts
+        <section class="header">
+            <div>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</div>
+            <aside>Header</aside>
+        </section>
+        <section>.</section>
+        <section class="payload">
+            eyJpc3MiOiJodHRwOi8vbXlzaXRlLmNvbSIsInN1YiI6IjEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9obiBEb2UiLCJhZG1pbiI6ZmFsc2V9
+            <aside>Payload/Claims</aside>
+        </section>
+        <section>.</section>
+        <section class="signature">
+            557STb-WKKi_UD2zN_Hjc9TxxEgaG3dchGupWToVhbs
+            <aside>JSON Web Signature (JWS)</aside>
+        </section>
+    </div>
+
+    <div id="JWT-parts-breakdown" class="step slide" data-x="0" data-y="1000">
+        <pre>
+        <code>
+            header = {
+            "alg": "HS256",
+            "typ": "JWT"
+            }
+        </code>
+        <code>
+            payload = {
+            "iss": "http://mysite.com",
+            "sub": "1234567890",
+            "name": "John Doe",
+            "admin": false
+            }
+        </code>
+        <code>
+            signature = HMACSHA256(
+            base64UrlEncode(header)+"."+base64UrlEncode(payload),
+            "YouWillNeverGuessThis"
+            )
+        </code>
+        <code>token = base64UrlEncode(header)
+            + "." + base64UrlEncode(payload)
+            + "." + signature
+        </code>
+            </pre>
+    </div>
+
+    <div id="benefits" class="step slide" data-x="1000" data-y="1000">
+        Benefits
+        <section>
+            <ul>
+                <li>Use Across Domains</li>
+                <li>Stateless</li>
+                <li>Flexible</li>
+                <li>Safe</li>
+                <li>Standards Based</li>
+                <li>Generate and validate tokens on different platforms</li>
+                <li>Decouple front end and backend</li>
+            </ul>
+        </section>
+    </div>
+
+    <div id="example" class="step" data-x="0" data-y="2000" data-scale="2">
+        How do we put this to use?
+    </div>
+
+    <div id="let-me-in" class="step slide" data-x="2500" data-y="1000" data-rotate="270">
+        Tokens in action
+        <div class="flexbox-columns">
+        <section>
+            <form id="login-form" action="http://avantidevelopment.com/givemeatoken.php" method="post" onsubmit="getToken(); return false;">
+                <div><label for="username">Username</label><br>
+                    <input id="username" name="username" type="text"/></div>
+                <div><label for="password">Password</label><br>
+                    <input id="password" name="password" type="text"/></div>
+                <div>
+                    <label>Remember Me? <input id="remember-me" type="checkbox" /></label>
+                </div>
+                <button>Submit</button>
+            </form>
+        </section>
+        <section>
+            Results
+            <div id="results-box"></div>
+        </section>
+        </div>
+    </div>
+
+    <div id="in-angular" class="step slide" data-x="2500" data-y="0" data-rotate="270">
+        Example: Angular
+        <section>
+        In app.js:
+            <pre>
+            <code>
+$httpProvider.interceptors.push(function ($injector) {
+    return {
+        'request':     function (config) {
+            var token = $injector('auth').getToken();
+            if (token) {
+                config.headers.Authorization = 'Bearer '
+                    + token;
+            }
+            return config;
+        }
+    }
+});
+            </code>
+            </pre>
+        </section>
+    </div>
+
+    <div id="resources" class="step slide" data-x="2500" data-y="-1000" data-rotate="270">
+        Resources
+        <section>
+            <ul>
+                <li><a href="http://jwt.io">jwt.io</a> - Tools and libraries for consuming/producing tokens</li>
+                <li><a href="https://developer.atlassian.com/static/connect/docs/latest/concepts/understanding-jwt.html">
+                    Understanding JWT</a> - More in-depth tutorial </li>
+                <li><a href="http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html">JWT Specification</a> -
+                Read up on the full specification</li>
+                <li><a href="https://thinkster.io/angularjs-jwt-auth">Angular JWT Tutorial</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <div id="overview" class="step" data-x="0" data-y="0" data-scale="6">
+    </div>
+
+
+</div>
+
+<script src="bower_components/impress.js/js/impress.js"></script>
+<script>impress().init();</script>
+<script src="js/scripts.js"></script>
+</body>
+</html>
