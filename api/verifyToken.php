@@ -1,7 +1,7 @@
 <?php
 use Firebase\JWT\JWT;
 
-require( 'vendor/autoload.php' );
+require( '../vendor/autoload.php' );
 $key = 'YouWillNeverGuessThis';
 if (empty( $_POST['token'] )) {
     badRequest();

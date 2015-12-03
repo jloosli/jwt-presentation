@@ -1,7 +1,7 @@
 <?php
 use Firebase\JWT\JWT;
 
-require('vendor/autoload.php');
+require('../vendor/autoload.php');
 if($_POST['username'] !== $_POST['password']) {
     header('http/1.0 401 Unauthorized');
     die(json_encode([
