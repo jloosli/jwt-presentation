@@ -2,12 +2,13 @@
 use Firebase\JWT\JWT;
 
 require( '../vendor/autoload.php' );
-$key = 'YouWillNeverGuessThis';
+$config = json_decode(file_get_contents('../config.json'));
+
 if (empty( $_POST['token'] )) {
     badRequest();
 }
 try {
-    JWT::decode($_POST['token'], $key, ['HS256']);
+    JWT::decode($_POST['token'], $config->secret, [$config->algorithm]);
 } catch (DomainException $e) {
     badRequest();
 }

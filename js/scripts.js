@@ -5,7 +5,7 @@ function getToken() {
         remember = document.getElementById('remember-me');
     clearToken();
     if (window.fetch) {
-        fetch('/api/getToken.php?XDEBUG_SESSION_START=PHPSTORM', {
+        fetch('/api/getToken.php', {
             method: 'post',
             body:   new FormData(document.getElementById('login-form'))
         }).then(function (response) {
@@ -30,11 +30,20 @@ function getToken() {
     }
 }
 
-function validateToken() {
+function validateToken(endpoint) {
+    var endpointURL;
+    switch (endpoint) {
+        case 'python':
+            endpointURL = 'http://localhost:9000/api/verifyToken.py';
+            break;
+        case 'php':
+        default:
+            endpointURL = '/api/verifyToken.php';
+    }
     var token = localStorage.getItem('token') || sessionStorage.getItem('token');
     data = new FormData();
     data.append('token', token);
-    fetch('/api/verifyToken.php?XDEBUG_SESSION_START=PHPSTORM', {
+    fetch(endpointURL, {
         method: 'post',
         body:   data
     }).then(function (response) {
@@ -79,7 +88,8 @@ function toggleAccess() {
             box.innerHTML = 'You are a user.';
         }
         box.innerHTML += '<div class="payload">Payload:<br><pre>' + JSON.stringify(payload, null, 2) + '</pre></div>';
-        box.innerHTML += '<button onclick="validateToken()">Validate</button>';
+        box.innerHTML += '<button onclick="validateToken(\'php\')">Validate (PHP)</button>';
+        box.innerHTML += '<button onclick="validateToken(\'python\')">Validate (Python)</button>';
     } else {
         box.innerHTML = 'You are not logged in';
     }

@@ -1,0 +1,7 @@
+{
+  "secret": "YouWillNeverGuessThis",
+  "issuer": "ogdenjs.org",
+  "audience": "ogdenjs.org",
+  "adminType": "ogdenjs",
+  "algorithm": "HS256"
+}
